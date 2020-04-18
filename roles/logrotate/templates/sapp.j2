@@ -1,0 +1,17 @@
+{{project_path}}/logs/*.log {
+    daily
+    missingok
+    rotate 60
+    compress
+    notifempty
+    copytruncate
+}
+{{project_path}}/logs/celery/*.log {
+    daily
+    missingok
+    rotate 60
+    compress
+    notifempty
+    copytruncate
+}
+

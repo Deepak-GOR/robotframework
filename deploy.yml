@@ -1,0 +1,16 @@
+---
+
+- name: Setup/Deploy App Servers
+  hosts: appservers
+  roles:
+    - base
+    - postgres
+    - nginx
+    - redis
+    - git
+    - virtualenv
+    - uwsgi
+    - django
+    - supervisor
+    - logrotate
+    - cron

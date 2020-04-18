@@ -1,0 +1,13 @@
+[program:{{project_name}}-uwsgi]
+command=uwsgi --ini {{project_path}}/uwsgi.ini
+autostart=true
+autorestart=true
+redirect_stderr=true
+stopsignal=QUIT
+
+[program:{{project_name}}-uwsgi-ops]
+command=uwsgi --ini {{project_path}}/uwsgi_ops.ini
+autostart=true
+autorestart=true
+redirect_stderr=true
+stopsignal=QUIT

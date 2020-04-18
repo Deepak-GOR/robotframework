@@ -1,0 +1,17 @@
+---
+
+# Used across multiple roles for filenames/paths/hostname
+project_name: sapp-hoad
+
+# Path where project is to be deployed
+project_path: /home/gor/sapp-hoad
+
+# Git Repo Url
+git_repo: git@bitbucket.org:gorcode/sapp-hoad.git
+git_version: master
+
+# Virtualenv Path
+virtualenv_path: /home/gor/virtualenvs/hoad
+
+# System User
+project_user: gor

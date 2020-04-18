@@ -1,0 +1,24 @@
+# Add as per environment
+[appservers:children]
+production
+
+[production:children]
+stage
+
+# stage
+[stage:children]
+stage-main
+
+[stage-main]
+192.168.9.137
+13.127.218.139
+192.168.8.166
+139.162.10.203
+139.162.51.238
+192.168.7.56
+192.168.7.57
+192.168.8.222
+192.168.9.82
+
+[main:children]
+stage-main

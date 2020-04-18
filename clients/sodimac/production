@@ -1,0 +1,18 @@
+# Add as per environment
+[appservers:children]
+production
+
+[production:children]
+sodimac
+
+#
+[sodimac:children]
+sodimac-main
+
+[sodimac-main]
+192.168.7.125
+
+[main:children]
+sodimac-main
+
+[backup:children]

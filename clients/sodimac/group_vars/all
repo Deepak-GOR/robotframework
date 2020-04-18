@@ -1,0 +1,24 @@
+---
+
+# Used across multiple roles for filenames/paths/hostname
+project_name: sapp-sodimac
+
+# Path where project is to be deployed
+project_path: /home/gor/{{project_name}}
+
+# Git Repo Url
+git_repo: git@bitbucket.org:gorcode/sapp-sodimac.git
+git_version: master
+
+# Virtualenv Path
+virtualenv_path: /home/gor/virtualenvs/sodimac
+
+# System User
+project_user: gor
+
+# Username for change password tag
+username: stdin
+
+# password for change password tag
+password: stdin
+

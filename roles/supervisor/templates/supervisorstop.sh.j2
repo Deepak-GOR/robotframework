@@ -1,0 +1,61 @@
+#!/bin/bash
+{% if ansible_distribution == 'Ubuntu' and ansible_distribution_version == '14.04' %}
+sudo service supervisor stop
+flag=0
+while [ "$flag" -eq 0 ]
+do
+    op=`sudo service supervisor status`
+    if echo "$op" | grep -q  "not running";
+    then
+        echo "stopped"
+        flag=1
+    else
+       echo "not stopped yet"
+    fi
+done
+{% endif %}
+{% if ansible_distribution == 'Ubuntu' and ansible_distribution_version == '16.04' %}
+sudo service supervisor stop
+flag=0
+while [ "$flag" -eq 0 ]
+do
+    op=`sudo service supervisor status`
+    if echo "$op" | grep -q  "inactive (dead)";
+    then
+        echo "stopped"
+        flag=1
+    else
+       echo "not stopped yet"
+    fi
+done
+{% endif %}
+{% if ansible_distribution == 'Ubuntu' and ansible_distribution_version == '18.04' %}
+sudo service supervisor stop
+flag=0
+while [ "$flag" -eq 0 ]
+do
+    op=`sudo service supervisor status`
+    if echo "$op" | grep -q  "inactive (dead)";
+    then
+        echo "stopped"
+        flag=1
+    else
+       echo "not stopped yet"
+    fi
+done
+{% endif %}
+{% if ansible_distribution == 'Debian' %}
+sudo service supervisor stop
+flag=0
+while [ "$flag" -eq 0 ]
+do
+    op=`sudo service supervisor status`
+    if echo "$op" | grep -q  "inactive (dead)";
+    then
+        echo "stopped"
+        flag=1
+    else
+       echo "not stopped yet"
+    fi
+done
+{% endif %}

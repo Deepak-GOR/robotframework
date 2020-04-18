@@ -1,0 +1,18 @@
+# Add as per environment
+[appservers:children]
+production
+
+[production:children]
+hul-rpc
+#
+[hul-rpc:children]
+hul-rpc-main
+
+[hul-rpc-main]
+192.168.22.38
+192.168.22.39
+
+[main:children]
+hul-rpc-main
+
+[backup:children]

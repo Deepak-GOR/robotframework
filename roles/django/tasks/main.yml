@@ -1,0 +1,76 @@
+---
+
+- name: Create Logs directory
+  file: path={{project_path}}/logs state=directory
+  tags:
+    - setup
+
+- name: Create celery logs directory
+  file: path={{project_path}}/logs/celery state=directory
+  tags:
+    - setup
+
+- name: Create Uploads directory
+  file: path={{project_path}}/uploads state=directory
+  tags:
+    - setup
+
+- name: Copy Installation Config
+  template: src=installation.py.j2
+            dest={{project_path}}/config/installation.py
+  notify: restart uwsgi
+  tags:
+    - setup
+    - config
+    - installation
+
+- name: Run Django syncdb command
+  when: "'backup' not in group_names"
+  django_manage:
+    command: migrate
+    app_path: "{{project_path}}"
+    virtualenv: "{{virtualenv_path}}"
+    settings: "{{django_settings_file}}"
+  tags:
+    - setup
+    - deploy
+
+- name: Run Django collectstatic
+  django_manage:
+    command: collectstatic
+    app_path: "{{project_path}}"
+    virtualenv: "{{virtualenv_path}}"
+    settings: "{{django_settings_file}}"
+  tags:
+    - deploy
+    - setup
+
+
+- name: Create users
+  django_manage:
+    command: createusers
+    app_path: "{{project_path}}"
+    virtualenv: "{{virtualenv_path}}"
+    settings: "{{django_settings_file}}"
+  tags:
+    - setup
+    - superuser
+
+- name: Change Password {{username}}
+  django_manage:
+    command: change_password --username={{username}} --password={{password}}
+    app_path: "{{project_path}}"
+    virtualenv: "{{virtualenv_path}}"
+    settings: "{{django_settings_file}}"
+  tags:
+    - changePassword
+
+- name: Create config {{project_name}} {{installation_type}}
+  when: "{{ project_name == 'sapp-rpc'}}"
+  django_manage:
+    command: createconfig --installation_type={{installation_type}}
+    app_path: "{{project_path}}"
+    virtualenv: "{{virtualenv_path}}"
+    settings: "{{django_settings_file}}"
+  tags:
+    - setup

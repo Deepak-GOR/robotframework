@@ -1,0 +1,2 @@
+django_name: django
+nginx_listen_port: 80

@@ -1,0 +1,14 @@
+---
+- name: zone free cron
+  cron: name="zone free cron" minute="*" hour="*" job="{{virtualenv_path}}/bin/python {{project_path}}/manage.py free_zone --settings=config.production"
+  when: project_name == "sapp-more"
+  tags:
+    - setup
+    - cronsetup
+
+- name: data cleanup cron
+  cron: name="data cleanup cron" minute="0" hour="4" job="{{virtualenv_path}}/bin/python {{project_path}}/manage.py data_cleanup --settings=config.production"
+  when: project_name == "sapp-more"
+  tags:
+    - setup
+    - cronsetup

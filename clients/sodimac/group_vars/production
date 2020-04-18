@@ -1,0 +1,15 @@
+---
+# Django settings file
+django_settings_file: config.production
+
+# Celery default worker, _c stands for concurrency
+celery_default_worker_c: 1
+celery_default_worker_numprocs: 1
+
+# Celery notification, _c stands for concurrency
+celery_notification_c: 2
+celery_notification_numprocs: 4
+
+uwsgi_num_workers: 6
+uwsgi_num_workers_ops: 6
+sapp_num_consumer_workers: 4

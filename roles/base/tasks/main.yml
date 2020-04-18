@@ -1,0 +1,23 @@
+---
+
+
+- name: Install base system packages
+  become: yes
+  apt: name={{item}} update_cache=yes state=latest
+  with_items:
+    - build-essential
+    - ntp
+    - python-dev
+    - python-pip
+    - libjpeg-dev
+    - libfreetype6-dev
+    - zlib1g-dev
+    - python-psycopg2
+    - libpq-dev
+    - vim
+    - rabbitmq-server
+    - python-pycurl
+    - libssl-dev
+    - libffi-dev
+  tags:
+    - setup

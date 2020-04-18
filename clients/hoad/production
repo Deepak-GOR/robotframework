@@ -1,0 +1,15 @@
+# Add as per environment
+[appservers:children]
+production
+
+[production:children]
+production1 
+
+[production1:children]
+production1-main
+
+[production1-main]
+192.168.7.172
+
+[main:children]
+production1-main

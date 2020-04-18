@@ -1,0 +1,17 @@
+[uwsgi]
+uid=gor
+gid=gor
+chdir={{project_path}}
+home={{virtualenv_path}}
+wsgi-file=%(chdir)/wsgi.py
+module=wsgi:application
+socket=/tmp/{{project_name}}.sock
+pidfile=/tmp/{{project_name}}.pid
+logto=/var/log/uwsgi/{{project_name}}.log
+vacuum=True
+master=True
+max-requests=5000
+workers={{uwsgi_num_workers}}
+chmod-socket=666
+harakiri=60
+

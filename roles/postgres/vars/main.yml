@@ -1,0 +1,2 @@
+deploy6k: ['shared_buffers = 8GB','effective_cache_size = 16GB','work_mem = 150MB','maintenance_work_mem = 512MB','checkpoint_segments = 16','effective_io_concurrency = 2','wal_buffers = 8MB']
+deploy3k: ['shared_buffers = 3GB','effective_cache_size = 6GB','work_mem = 150MB','maintenance_work_mem = 512MB','checkpoint_segments = 16','effective_io_concurrency = 2','wal_buffers = 8MB']

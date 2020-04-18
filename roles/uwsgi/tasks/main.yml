@@ -1,0 +1,28 @@
+---
+- name: Install uwsgi
+  pip: name=uwsgi
+  become: yes
+  tags:
+    - setup
+
+- name: Create uwsgi log directory
+  file: path=/var/log/uwsgi state=directory owner=gor group=gor recurse=yes
+  become: yes
+  tags:
+    - setup
+
+- name: Copy uwsgi ini file to home directory
+  template: src=uwsgi.ini.j2
+            dest={{project_path}}/uwsgi.ini
+  notify: restart uwsgi
+  tags:
+    - setup
+    - config
+
+- name: Copy uwsgi ops ini file to home directory
+  template: src=uwsgi_ops.ini.j2
+            dest={{project_path}}/uwsgi_ops.ini
+  notify: restart uwsgi_ops
+  tags:
+    - setup
+    - config

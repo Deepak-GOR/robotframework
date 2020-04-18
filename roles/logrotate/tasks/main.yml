@@ -1,0 +1,13 @@
+---
+- name: Copy logrotate script
+  template:
+    src: "{{item.src}}"
+    dest: "{{item.dest}}"
+  become: yes
+  with_items:
+      - { src: 'sapp.j2', dest: '/etc/logrotate.d/sapp' }
+      - { src: 'supervisord.j2', dest: '/etc/logrotate.d/supervisord' }
+      - { src: 'uwsgi.j2', dest: '/etc/logrotate.d/uwsgi' }
+  tags:
+    - setup
+    - logrotatesetup

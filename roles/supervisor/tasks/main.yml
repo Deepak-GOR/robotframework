@@ -1,0 +1,78 @@
+---
+- name: Install supervisor
+  apt: name=supervisor update_cache=yes state=latest
+  become: yes
+  tags:
+    - setup
+
+- name: Install supervisor wildcard plugin
+  pip: name=supervisor-wildcards
+  become: yes
+  tags:
+    - setup
+
+- name: Copy Supervisor conf file
+  template: src=supervisor.conf.j2
+            dest=/etc/supervisor/supervisord.conf
+  become: yes
+  tags:
+    - setup
+    - config
+
+- name: Copy Supervisor uwsgi conf file
+  template: src=sapp_uwsgi.conf.j2
+            dest=/etc/supervisor/conf.d/{{project_name}}_uwsgi.conf
+  become: yes
+  tags:
+    - setup
+    - config
+
+- name: Copy Supervisor celery conf file
+  template: src=sapp_celery.conf.j2
+            dest=/etc/supervisor/conf.d/{{project_name}}_celery.conf
+  become: yes
+  tags:
+    - setup
+    - config
+
+- name: Copy Supervisor celerybeat conf file
+  template: src=celerybeat.conf.j2
+            dest=/etc/supervisor/conf.d/celerybeat.conf
+  become: yes
+  tags:
+    - setup
+    - config
+
+# We had created this script because if we run stop supervisor command
+# it doesn't stop immediately, so if we run start supervisor command it won't work properly.
+# This script is watching and doesn't start/stop executing until supervisor start/stop properly.
+
+- name: Copy Supervisor start file
+  template: src=supervisorstart.sh.j2 dest={{project_path}}/supervisorstart.sh mode=0755
+  tags:
+    - setup
+    - deploy
+    - safe_supervisor
+
+- name: Copy Supervisor stop file
+  template: src=supervisorstop.sh.j2 dest={{project_path}}/supervisorstop.sh mode=0755
+  tags:
+    - setup
+    - deploy
+    - safe_supervisor
+
+- name: stop supervisor v2
+  command: "sh {{project_path}}/supervisorstop.sh"
+  become: yes
+  tags:
+    - setup
+    - deploy
+    - safe_supervisor
+
+- name: start supervisor v2
+  command: "sh {{project_path}}/supervisorstart.sh"
+  become: yes
+  tags:
+    - setup
+    - deploy
+    - safe_supervisor

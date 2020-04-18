@@ -1,0 +1,19 @@
+---
+
+- name: stop supervisor
+  command: "sh {{project_path}}/supervisorstop.sh"
+  become: yes
+
+
+- name: start supervisor
+  command: "sh {{project_path}}/supervisorstart.sh"
+  when: "'backup' not in group_names"
+  become: yes
+
+- name: restart uwsgi
+  supervisorctl: name='{{project_name}}-uwsgi' state=restarted
+  become: yes
+
+- name: restart uwsgi_ops
+  supervisorctl: name='{{project_name}}-uwsgi-ops' state=restarted
+  become: yes

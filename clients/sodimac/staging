@@ -1,0 +1,16 @@
+# Add as per environment
+[appservers:children]
+production
+
+[production:children]
+stage
+
+# stage
+[stage:children]
+stage-main
+
+[stage-main]
+sapp_vm
+
+[main:children]
+stage-main

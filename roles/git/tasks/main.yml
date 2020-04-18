@@ -1,0 +1,23 @@
+---
+
+- name: Install Git
+  apt: name=git update_cache=yes state=latest
+  become: yes
+  tags:
+    - setup
+
+
+- name: Create Destination directory to checkout SAPP code
+  file: path={{project_path}} state=directory
+  tags:
+    - setup
+
+
+- name: Checkout/Pull SAPP code from repository
+  git: repo={{git_repo}} dest={{project_path}} accept_hostkey=yes version={{git_version}}
+  notify:
+    - restart uwsgi
+    - restart nginx
+  tags:
+    - deploy
+    - setup

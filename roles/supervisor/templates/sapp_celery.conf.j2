@@ -1,0 +1,43 @@
+[program:{{project_name}}-celery-default]
+environment=DJANGO_SETTINGS_MODULE='{{django_settings_file}}'
+directory={{project_path}}/
+command={{virtualenv_path}}/bin/celery -A config worker -c {{celery_default_worker_c}} -Q default --loglevel=INFO
+process_name=%(program_name)s_%(process_num)02d
+user={{project_user}}
+numprocs={{celery_default_worker_numprocs}}
+stdout_logfile={{project_path}}/logs/celery/default-worker.log
+stderr_logfile={{project_path}}/logs/celery/default-worker.log
+autostart=true
+autorestart=true
+startsecs=10
+
+; Need to wait for currently executing tasks to finish at shutdown.
+; Increase this if you have very long running tasks.
+stopwaitsecs = 600
+
+; When resorting to send SIGKILL to the program to terminate it
+; send SIGKILL to its whole process group instead,
+; taking care of its children as well.
+killasgroup=true
+
+[program:{{project_name}}-celery-notification]
+environment=DJANGO_SETTINGS_MODULE='{{django_settings_file}}'
+directory={{project_path}}/
+command={{virtualenv_path}}/bin/celery -A config worker -c {{celery_notification_c}} -Q notification --loglevel=INFO
+process_name=%(program_name)s_%(process_num)02d
+user={{project_user}}
+numprocs={{celery_notification_numprocs}}
+stdout_logfile={{project_path}}/logs/celery/notification.log
+stderr_logfile={{project_path}}/logs/celery/notification.log
+autostart=true
+autorestart=true
+startsecs=10
+
+; Need to wait for currently executing tasks to finish at shutdown.
+; Increase this if you have very long running tasks.
+stopwaitsecs = 600
+
+; When resorting to send SIGKILL to the program to terminate it
+; send SIGKILL to its whole process group instead,
+; taking care of its children as well.
+killasgroup=true
